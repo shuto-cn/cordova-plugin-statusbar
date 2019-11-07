@@ -57,6 +57,15 @@ public class StatusBar extends CordovaPlugin {
                 // Clear flag FLAG_FORCE_NOT_FULLSCREEN which is set initially
                 // by the Cordova.
                 Window window = cordova.getActivity().getWindow();
+                 // 添加的内容开始
+                 window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                 window.addFlags(WindowManager.LayoutParams
+                                 .FLAG_TRANSLUCENT_NAVIGATION);
+                 window.addFlags(WindowManager.LayoutParams
+                                 .FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                 window.setStatusBarColor(Color.TRANSPARENT);
+                 window.setNavigationBarColor(Color.TRANSPARENT);
+                 // 添加的内容结束
                 window.clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 
                 // Read 'StatusBarBackgroundColor' from config.xml, default is #000000.

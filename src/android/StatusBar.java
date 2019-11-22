@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  *
-*/
+ */
 package org.apache.cordova.statusbar;
 
 import android.app.Activity;
@@ -57,15 +57,20 @@ public class StatusBar extends CordovaPlugin {
                 // Clear flag FLAG_FORCE_NOT_FULLSCREEN which is set initially
                 // by the Cordova.
                 Window window = cordova.getActivity().getWindow();
-                 // 添加的内容开始
-                 window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-                 window.addFlags(WindowManager.LayoutParams
-                                 .FLAG_TRANSLUCENT_NAVIGATION);
-                 window.addFlags(WindowManager.LayoutParams
-                                 .FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                 window.setStatusBarColor(Color.TRANSPARENT);
-                 window.setNavigationBarColor(Color.TRANSPARENT);
-                 // 添加的内容结束
+                // 添加的内容开始
+                window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//                  window.addFlags(WindowManager.LayoutParams
+//                                  .FLAG_TRANSLUCENT_NAVIGATION);
+                window.addFlags(WindowManager.LayoutParams
+                        .FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    window.setStatusBarColor(Color.TRANSPARENT);
+                    window.setNavigationBarColor(Color.TRANSPARENT);
+                }
+
+//                 window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+//                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN);
+                // 添加的内容结束
                 window.clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 
                 // Read 'StatusBarBackgroundColor' from config.xml, default is #000000.
@@ -259,13 +264,13 @@ public class StatusBar extends CordovaPlugin {
                 int uiOptions = decorView.getSystemUiVisibility();
 
                 String[] darkContentStyles = {
-                    "default",
+                        "default",
                 };
 
                 String[] lightContentStyles = {
-                    "lightcontent",
-                    "blacktranslucent",
-                    "blackopaque",
+                        "lightcontent",
+                        "blacktranslucent",
+                        "blackopaque",
                 };
 
                 if (Arrays.asList(darkContentStyles).contains(style.toLowerCase())) {
